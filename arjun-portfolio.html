@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arjun Aswal — Game Developer &amp; Programmer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #121016;
+    --bg-elevated: #1B1820;
+    --bg-card: #17151C;
+    --ink: #F2EFEA;
+    --ink-dim: #9C96A8;
+    --ink-faint: #625C71;
+    --accent-amber: #F5A623;
+    --accent-teal: #3ED6B5;
+    --line: #2A2733;
+    --stable: #6FCF97;
+    --jam: #F5A623;
+    --mobile: #3ED6B5;
+    --proto: #9C96A8;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --body: 'Inter', system-ui, sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+  img{ max-width:100%; display:block; }
+
+  ::selection{ background: var(--accent-amber); color: #121016; }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--accent-amber);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position: sticky;
+    top:0;
+    z-index: 50;
+    background: rgba(18,16,22,0.86);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    max-width: 920px;
+    margin: 0 auto;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .nav-logo{
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .nav-logo span{ color: var(--accent-amber); }
+  .nav-links{
+    display:flex;
+    gap: 24px;
+    list-style:none;
+    margin:0; padding:0;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color: var(--ink-dim);
+    transition: color .15s ease;
+  }
+  .nav-links a:hover{ color: var(--ink); }
+  .status-pill{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color: var(--stable);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .status-dot{
+    width:7px; height:7px;
+    border-radius:50%;
+    background: var(--stable);
+    box-shadow: 0 0 8px var(--stable);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity: 1; }
+    50%{ opacity: .35; }
+  }
+
+  @media (max-width: 620px){
+    .nav-links{ display:none; }
+  }
+
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:1px solid var(--line);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 18px;
+    line-height:1;
+    padding: 6px 11px;
+    border-radius: 3px;
+    cursor:pointer;
+  }
+  @media (max-width: 620px){
+    .nav-toggle{ display:inline-block; }
+  }
+  .mobile-menu{
+    display:none;
+    flex-direction: column;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{
+    font-family: var(--mono);
+    font-size: 14px;
+    text-decoration:none;
+    color: var(--ink-dim);
+    padding: 14px 28px;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-menu a:hover{ color: var(--ink); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 96px 28px 84px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse 700px 320px at 15% -10%, rgba(245,166,35,0.10), transparent 60%),
+      radial-gradient(ellipse 600px 300px at 100% 0%, rgba(62,214,181,0.08), transparent 60%);
+  }
+  .hero-inner{ max-width: 920px; margin:0 auto; }
+  .prompt-line{
+    font-family: var(--mono);
+    color: var(--accent-teal);
+    font-size: 14px;
+    margin-bottom: 18px;
+    display:flex;
+    align-items:center;
+    gap: 2px;
+  }
+  .prompt-line .p1{ color: var(--ink-faint); margin-right:8px; }
+  .cursor{
+    display:inline-block;
+    width: 8px; height: 17px;
+    background: var(--accent-amber);
+    margin-left: 4px;
+    animation: blink 1s step-end infinite;
+    vertical-align: -3px;
+  }
+  @keyframes blink{ 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+
+  h1.name{
+    font-family: var(--mono);
+    font-size: clamp(38px, 7vw, 68px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    line-height: 1.02;
+  }
+  .role{
+    font-family: var(--mono);
+    font-size: clamp(15px, 2.4vw, 19px);
+    color: var(--accent-amber);
+    font-weight: 500;
+    margin: 0 0 22px;
+  }
+  .tagline{
+    max-width: 540px;
+    color: var(--ink-dim);
+    font-size: 16.5px;
+    margin: 0 0 34px;
+  }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration:none;
+    padding: 12px 20px;
+    border-radius: 3px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn-primary{
+    background: var(--accent-amber);
+    color: #16130E;
+  }
+  .btn-primary:hover{ transform: translateY(-1px); background:#FFB84D; }
+  .btn-ghost{
+    border: 1px solid var(--line);
+    color: var(--ink-dim);
+  }
+  .btn-ghost:hover{ border-color: var(--accent-teal); color: var(--accent-teal); }
+
+  /* ---------- SECTION LABEL ---------- */
+  .section-label{
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin: 0 0 6px;
+  }
+  .section-title{
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 8px;
+  }
+  .section-sub{
+    color: var(--ink-dim);
+    font-size: 15px;
+    margin: 0 0 44px;
+    max-width: 480px;
+  }
+
+  section{ padding: 76px 0; border-bottom: 1px solid var(--line); }
+
+  /* ---------- CHANGELOG ---------- */
+  .entry{
+    display:grid;
+    grid-template-columns: 220px 1fr;
+    gap: 28px;
+    padding: 30px 0;
+    border-top: 1px solid var(--line);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .entry.in-view{ opacity:1; transform: translateY(0); }
+  .entry:last-child{ border-bottom: none; }
+
+  .entry-media{
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-elevated);
+    aspect-ratio: 4/3;
+  }
+  .entry-media img{ width:100%; height:100%; object-fit: cover; }
+
+  .entry-head{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+  }
+  .version{
+    color: var(--ink-faint);
+    font-size: 13px;
+  }
+  .badge{
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid currentColor;
+  }
+  .badge.stable{ color: var(--stable); }
+  .badge.jam{ color: var(--jam); }
+  .badge.mobile{ color: var(--mobile); }
+  .badge.proto{ color: var(--proto); }
+
+  .entry-title{
+    font-family: var(--mono);
+    font-size: 21px;
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+  .entry-desc{
+    color: var(--ink-dim);
+    font-size: 15px;
+    margin: 0 0 16px;
+    max-width: 52ch;
+  }
+  .tags{
+    display:flex; gap:8px; flex-wrap:wrap;
+    margin-bottom: 16px;
+  }
+  .tag{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent-teal);
+    background: rgba(62,214,181,0.08);
+    padding: 3px 9px;
+    border-radius: 3px;
+  }
+  .entry-links{ display:flex; gap:10px; flex-wrap:wrap; }
+  .link-badge{
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration:none;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 7px 12px;
+    border-radius: 3px;
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .link-badge:hover{ border-color: var(--accent-amber); color: var(--accent-amber); }
+
+  @media (max-width: 640px){
+    .entry{ grid-template-columns: 1fr; }
+    .entry-media{ aspect-ratio: 16/9; }
+  }
+
+  .entry-media.placeholder{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 16px;
+    background:
+      repeating-linear-gradient(135deg, rgba(245,166,35,0.05) 0 2px, transparent 2px 10px),
+      var(--bg-elevated);
+  }
+  .entry-media.placeholder span{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  .shipped-note{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin: -6px 0 16px;
+  }
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-entry{
+    display:flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .exp-entry:last-child{ padding-bottom: 0; }
+  .exp-left{ max-width: 460px; }
+  .exp-role{
+    font-family: var(--mono);
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .exp-company{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent-teal);
+    margin: 0 0 14px;
+  }
+  .exp-bullets{
+    margin:0; padding-left: 18px;
+    color: var(--ink-dim);
+    font-size: 14.5px;
+  }
+  .exp-bullets li{ margin-bottom: 6px; }
+  .exp-dates{
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  /* ---------- ABOUT / DEPENDENCIES ---------- */
+  .deps-card{
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 28px 30px;
+    font-family: var(--mono);
+    font-size: 14px;
+    overflow-x: auto;
+  }
+  .deps-card .bio{
+    font-family: var(--body);
+    color: var(--ink-dim);
+    font-size: 15.5px;
+    line-height: 1.65;
+    max-width: 62ch;
+    margin: 0 0 30px;
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .deps-card .file-label{ color: var(--ink-faint); margin-bottom: 14px; font-size: 13px;}
+  pre.deps{ margin:0; white-space: pre; color: var(--ink-dim); }
+  pre.deps .key{ color: var(--accent-teal); }
+  pre.deps .val{ color: var(--accent-amber); }
+  pre.deps .cmt{ color: var(--ink-faint); }
+  pre.deps .punc{ color: var(--ink-faint); }
+
+  /* ---------- FOOTER / CONTACT ---------- */
+  footer{
+    padding: 70px 0 50px;
+  }
+  .footer-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 44px;
+  }
+  .connect-links{
+    display:flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .connect-badge{
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration:none;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 10px 16px;
+    border-radius: 4px;
+    transition: border-color .15s ease, color .15s ease, transform .15s ease;
+  }
+  .connect-badge:hover{
+    border-color: var(--accent-teal);
+    color: var(--accent-teal);
+    transform: translateY(-1px);
+  }
+  .footer-status{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .footer-status .status-pill{ margin-top:6px; }
+  .footer-bottom{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-faint);
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+    html{ scroll-behavior: auto; }
+    .entry{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">arjun<span>.dev</span></a>
+    <ul class="nav-links">
+      <li><a href="#changelog">projects</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#about">about</a></li>
+      <li><a href="#connect">contact</a></li>
+    </ul>
+    <div class="status-pill"><span class="status-dot"></span> BUILD PASSING</div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#changelog">projects</a>
+    <a href="#experience">experience</a>
+    <a href="#about">about</a>
+    <a href="#connect">contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="prompt-line"><span class="p1">arjun@dev:~$</span> whoami<span class="cursor"></span></div>
+    <h1 class="name">Arjun Aswal</h1>
+    <p class="role">Game Developer &amp; Programmer</p>
+    <p class="tagline">I build small, sharp games — from FPS survival loops to jam prototypes. Mostly Unity and C#, mostly too much time in the debugger.</p>
+    <div class="cta-row">
+      <a href="#changelog" class="btn btn-primary">View changelog ↓</a>
+      <a href="#connect" class="btn btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="changelog">
+  <div class="wrap">
+    <p class="section-label">// project_history.log</p>
+    <h2 class="section-title">Changelog</h2>
+    <p class="section-sub">A version history of shipped builds — smallest prototypes to the most complete release.</p>
+
+    <div class="entry">
+      <div class="entry-media placeholder">
+        <span>// no preview available<br>[ live on Indus App Store ]</span>
+      </div>
+      <div>
+        <div class="entry-head">
+          <span class="version">v2.1.0</span>
+          <span class="badge stable">LIVE</span>
+        </div>
+        <h3 class="entry-title">Pet Bowl</h3>
+        <p class="entry-desc">A mobile puzzle game built with a 4-person team. I built the core gameplay systems from scratch — swipe-based tile movement, color-socket matching logic, and win-state detection — before a senior developer optimized the codebase ahead of release.</p>
+        <div class="tags">
+          <span class="tag">#unity</span><span class="tag">#mobile</span><span class="tag">#team-project</span>
+        </div>
+        <p class="shipped-note">📦 shipped to the Indus App Store — Verified badge</p>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-media">
+        <img src="https://static.wixstatic.com/media/3be2c1_0c07614115254a4fb12059cfd99419fc~mv2.png" alt="Kill Them All — FPS zombie survival game screenshot" loading="lazy">
+      </div>
+      <div>
+        <div class="entry-head">
+          <span class="version">v1.4.0</span>
+          <span class="badge stable">STABLE</span>
+        </div>
+        <h3 class="entry-title">Kill Them All</h3>
+        <p class="entry-desc">An FPS survival game built during a one-month internship at Campus Coder. Players navigate post-apocalyptic levels, switch between weapons, and outmaneuver zombies that track their every move.</p>
+        <div class="tags">
+          <span class="tag">#unity</span><span class="tag">#csharp</span><span class="tag">#fps</span><span class="tag">#enemy-ai</span>
+        </div>
+        <div class="entry-links">
+          <a class="link-badge" href="https://github.com/Arjun0034/FPS-Game.git" target="_blank" rel="noopener">[ GH — source ]</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-media">
+        <img src="https://static.wixstatic.com/media/c1d6e8d1-1885-4be9-a6cc-6da6d8177bdf/v1/fill/w_960,h_639,al_c/c1d6e8d1-1885-4be9-a6cc-6da6d8177bdf" alt="Tiny Man's Adventure — 2D adventure game screenshot" loading="lazy">
+      </div>
+      <div>
+        <div class="entry-head">
+          <span class="version">v1.2.0</span>
+          <span class="badge jam">JAM BUILD</span>
+        </div>
+        <h3 class="entry-title">Tiny Man's Adventure</h3>
+        <p class="entry-desc">A 2D adventure built solo for the IGDC Game Jam. A lone traveler crosses dense wilderness, dodging obstacles and animals to find a way home — design, code, and art all handled solo.</p>
+        <div class="tags">
+          <span class="tag">#unity2d</span><span class="tag">#game-jam</span><span class="tag">#solo-dev</span>
+        </div>
+        <div class="entry-links">
+          <a class="link-badge" href="https://arjun001.itch.io/tiny-mans-adventure" target="_blank" rel="noopener">[ ITCH.IO — play ]</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-media">
+        <img src="https://static.wixstatic.com/media/37a9e6b3-b5cd-4687-bc95-c50b428de9eb/v1/fill/w_1920,h_1080,al_c/37a9e6b3-b5cd-4687-bc95-c50b428de9eb" alt="Cube — 2D Android game screenshot" loading="lazy">
+      </div>
+      <div>
+        <div class="entry-head">
+          <span class="version">v1.0.0</span>
+          <span class="badge mobile">MOBILE</span>
+        </div>
+        <h3 class="entry-title">CubeAdventure</h3>
+        <p class="entry-desc">A 2D platformer built in Unity with an original coin-to-bullet mechanic tying collectibles directly to the player's ranged attack. Responsive player movement, enemy trigger logic, and collision systems, all programmed from scratch in C#, with particle effects and animation feedback to sell every hit.</p>
+        <div class="tags">
+          <span class="tag">#unity</span><span class="tag">#csharp</span><span class="tag">#android</span>
+        </div>
+        <div class="entry-links">
+          <a class="link-badge" href="https://github.com/Arjun0034/Cube.git" target="_blank" rel="noopener">[ GH — source ]</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-media">
+        <img src="https://static.wixstatic.com/media/0d6dfcb5-217d-4767-bd59-89a59b3d0445/v1/fill/w_920,h_871,al_c/0d6dfcb5-217d-4767-bd59-89a59b3d0445" alt="2048 Clone — grid puzzle game screenshot" loading="lazy">
+      </div>
+      <div>
+        <div class="entry-head">
+          <span class="version">v0.3.0</span>
+          <span class="badge proto">PROTOTYPE</span>
+        </div>
+        <h3 class="entry-title">2048 Clone</h3>
+        <p class="entry-desc">A 4x4 grid puzzle built to learn core Unity systems — layout groups, scriptable objects, coroutine-driven animation, and mobile swipe controls.</p>
+        <div class="tags">
+          <span class="tag">#unity</span><span class="tag">#prototype</span><span class="tag">#learning</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <p class="section-label">// employment.log</p>
+    <h2 class="section-title">Experience</h2>
+    <p class="section-sub">Where the code actually shipped, on a schedule that wasn't mine to set.</p>
+
+    <div class="exp-entry">
+      <div class="exp-left">
+        <h3 class="exp-role">Unity Developer Trainee</h3>
+        <p class="exp-company">Jabsz Gaming Studio</p>
+        <ul class="exp-bullets">
+          <li>Completed structured training in Git workflows, prompt engineering, and cybersecurity / phishing-prevention practices within a professional SDLC.</li>
+          <li>Strengthened collaboration and communication skills through team exercises in a studio environment.</li>
+        </ul>
+      </div>
+      <span class="exp-dates">Aug 2025 — Nov 2025</span>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-left">
+        <h3 class="exp-role">Game Developer Intern</h3>
+        <p class="exp-company">Campus Coder</p>
+        <ul class="exp-bullets">
+          <li>Built a first-person shooter prototype in Unity — core gameplay mechanics, UI, and performance optimizations.</li>
+          <li>Collaborated with a development team using Git and agile workflows, resolving bugs and integrating feedback to keep the project on schedule.</li>
+        </ul>
+      </div>
+      <span class="exp-dates">Dec 2023 — Jan 2024</span>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <p class="section-label">// package.json</p>
+    <h2 class="section-title">About</h2>
+    <p class="section-sub">A short bio, disguised as a manifest.</p>
+
+    <div class="deps-card">
+      <p class="bio">I'm a game developer and programmer who likes building complete, playable loops — from FPS shooters to shipped mobile puzzle games. Comfortable working solo across design, code, and art, or plugging into a team as the programmer who ships. Python-certified through Stanford's Code in Place.</p>
+      <p class="file-label">dependencies:</p>
+      <pre class="deps"><span class="punc">{</span>
+  <span class="key">"unity"</span><span class="punc">:</span> <span class="val">"^2022.3.0 (2D &amp; 3D)"</span><span class="punc">,</span>
+  <span class="key">"csharp"</span><span class="punc">:</span> <span class="val">"^9.0.0"</span><span class="punc">,</span>
+  <span class="key">"python"</span><span class="punc">:</span> <span class="val">"certified"</span> <span class="cmt">// Stanford Code in Place</span><span class="punc">,</span>
+  <span class="key">"oop"</span><span class="punc">:</span> <span class="val">"stable"</span><span class="punc">,</span>
+  <span class="key">"level-design"</span><span class="punc">:</span> <span class="val">"stable"</span><span class="punc">,</span>
+  <span class="key">"collision-detection"</span><span class="punc">:</span> <span class="val">"stable"</span><span class="punc">,</span>
+  <span class="key">"version-control"</span><span class="punc">:</span> <span class="val">"git | github | perforce"</span><span class="punc">,</span>
+  <span class="key">"tools"</span><span class="punc">:</span> <span class="val">"visual studio | vs code | photoshop"</span><span class="punc">,</span>
+  <span class="key">"game-feel"</span><span class="punc">:</span> <span class="val">"^1.0.0"</span> <span class="cmt">// juice, feedback, polish</span><span class="punc">,</span>
+  <span class="key">"debugging"</span><span class="punc">:</span> <span class="val">"latest"</span> <span class="cmt">// an unreasonable amount</span>
+<span class="punc">}</span></pre>
+    </div>
+  </div>
+</section>
+
+<footer id="connect">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <p class="section-label">// connect</p>
+        <h2 class="section-title" style="margin-bottom:20px;">Let's talk</h2>
+        <div class="connect-links">
+          <a class="connect-badge" href="https://github.com/Arjun0034" target="_blank" rel="noopener">[ GITHUB ]</a>
+          <a class="connect-badge" href="https://arjun001.itch.io" target="_blank" rel="noopener">[ ITCH.IO ]</a>
+          <a class="connect-badge" href="#" target="_blank" rel="noopener">[ LINKEDIN ]</a>
+        </div>
+      </div>
+      <div class="footer-status">
+        available for work
+        <div class="status-pill"><span class="status-dot"></span> OPEN TO OFFERS</div>
+      </div>
+    </div>
+    <div class="footer-bottom">// built by Arjun, obviously — © 2026</div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+    navToggle.textContent = isOpen ? '✕' : '☰';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.textContent = '☰';
+    });
+  });
+
+  // Reveal changelog entries on scroll
+  const entries = document.querySelectorAll('.entry');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((items) => {
+      items.forEach(item => {
+        if (item.isIntersecting) {
+          item.target.classList.add('in-view');
+          io.unobserve(item.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    entries.forEach(el => io.observe(el));
+  } else {
+    entries.forEach(el => el.classList.add('in-view'));
+  }
+</script>
+
+</body>
+</html>
